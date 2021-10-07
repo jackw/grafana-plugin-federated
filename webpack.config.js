@@ -1,6 +1,5 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const _ = require('lodash');
@@ -14,10 +13,11 @@ module.exports = {
   target: 'web',
   context: path.join(__dirname, 'src'),
   entry: {
-    module: './module.ts',
+    plugin: './plugin.ts',
   },
   devtool: 'source-map',
   output: {
+    clean: true,
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
     libraryTarget: 'amd',
@@ -54,13 +54,12 @@ module.exports = {
     },
   ],
   plugins: [
-    new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
       name: _.snakeCase(pluginName),
-      filename: 'remoteEntry.js',
+      filename: 'module.js',
       remotes: {},
       exposes: {
-        "./plugin": "./module.ts"
+        "./plugin": "./plugin.ts"
       },
       shared: {
         react: { singleton: true, requiredVersion: deps.react },

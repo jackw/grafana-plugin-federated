@@ -3,7 +3,7 @@
   "type": "panel",
   "name": "webpack-federated",
   "id": "heywesty-webpack-federated",
-  "jsLoader": "webpack5",
+  "moduleLoader": "federated-modules",
   "info": {
     "description": "A grafana plugin that uses webpack 5 federated modules",
     "author": {
